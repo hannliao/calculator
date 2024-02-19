@@ -15,7 +15,6 @@ function divide(a, b) {
 }
 
 function operate(a, b, op) {
-    console.log(op);
     switch (op) {
         case "+":
             ans.textContent = add(a, b);
@@ -30,13 +29,6 @@ function operate(a, b, op) {
             ans.textContent = divide(a, b);
             break;
     }
-    reset();
-}
-
-function reset() {
-    a = "";
-    b = "";
-    op = "";
 }
 
 let a = "";
@@ -48,9 +40,6 @@ const ans = document.querySelector("#display");
 const numbers = document.querySelectorAll(".number");
 numbers.forEach(function(num) {
     num.addEventListener("click", function() {
-        if (a === "") {
-            ans.textContent = "";
-        }
         if (op) {
             ans.textContent = "";
             b += num.textContent;
@@ -59,12 +48,19 @@ numbers.forEach(function(num) {
             a += num.textContent;
             ans.textContent = a;
          }
+         console.log("a: " + a + " b: " + b + " ans: " + ans.textContent);
     });
 });
 
 const btns = document.querySelectorAll(".op");
 btns.forEach(function(btn) {
-    btn.addEventListener("click", () => op = btn.textContent);
+    btn.addEventListener("click", () => {
+        operate(a, b, op);
+        a = ans.textContent;
+        b = "";
+        op = btn.textContent;
+        console.log("a: " + a + " b: " + b + " ans: " + ans.textContent);
+    });
 });
 
 const eq = document.querySelector("#equal");
@@ -72,6 +68,8 @@ eq.addEventListener("click", () => operate(a, b, op));
 
 const clr = document.querySelector("#clear");
 clr.addEventListener("click", () => {
-    reset();
-    ans.textContent = "8888"
+    a = "";
+    b = "";
+    op = "";
+    ans.textContent = "0"
 });
