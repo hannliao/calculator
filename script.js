@@ -26,7 +26,7 @@ function operate(a, b, op) {
             ans.textContent = multiply(a, b);
             break;
         case "÷":
-            ans.textContent = divide(a, b);
+            ans.textContent = (b == 0) ? "nope" : divide(a, b);
             break;
     }
 }
@@ -48,7 +48,6 @@ numbers.forEach(function(num) {
             a += num.textContent;
             ans.textContent = a;
          }
-         console.log("a: " + a + " b: " + b + " ans: " + ans.textContent);
     });
 });
 
@@ -59,7 +58,6 @@ btns.forEach(function(btn) {
         a = ans.textContent;
         b = "";
         op = btn.textContent;
-        console.log("a: " + a + " b: " + b + " ans: " + ans.textContent);
     });
 });
 
