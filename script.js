@@ -31,20 +31,38 @@ function operate(a, b, op) {
     }
 }
 
+function reset() {
+    a = "";
+    b = "";
+    op = "";
+    enableDecimal();
+}
+
+function enableDecimal() {
+    dec.disabled = false;
+}
+
+function disableDecimal() {
+    dec.disabled = true;
+}
+
 let a = "";
 let b = "";
 let op = "";
 
 const ans = document.querySelector("#display");
+const dec = document.querySelector("#decimal");
 
 const numbers = document.querySelectorAll(".number");
 numbers.forEach(function(num) {
     num.addEventListener("click", function() {
         if (op) {
+            if (b.includes(".")) disableDecimal();
             ans.textContent = "";
             b += num.textContent;
             ans.textContent = b;
          } else {
+            if (a.includes(".")) disableDecimal();
             a += num.textContent;
             ans.textContent = a;
          }
@@ -55,19 +73,20 @@ const btns = document.querySelectorAll(".op");
 btns.forEach(function(btn) {
     btn.addEventListener("click", () => {
         operate(a, b, op);
+        reset();
         a = ans.textContent;
-        b = "";
         op = btn.textContent;
     });
 });
 
 const eq = document.querySelector("#equal");
-eq.addEventListener("click", () => operate(a, b, op));
+eq.addEventListener("click", () => {
+    operate(a, b, op);
+    reset();
+});
 
 const clr = document.querySelector("#clear");
 clr.addEventListener("click", () => {
-    a = "";
-    b = "";
-    op = "";
+    reset();
     ans.textContent = "0"
 });
