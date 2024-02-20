@@ -1,17 +1,17 @@
 function add(a, b) {
-    return +a + +b;
+    return round(+a + +b);
 }
 
 function subtract(a, b) {
-    return a - b;
+    return round(a - b);
 }
 
 function multiply(a, b) {
-    return a * b;
+    return round(a * b);
 }
 
 function divide(a, b) {
-    return a / b;
+    return round(a / b);
 }
 
 function operate(a, b, op) {
@@ -46,6 +46,12 @@ function disableDecimal() {
     dec.disabled = true;
 }
 
+function round(n) {
+    let rounded = parseFloat(n).toFixed(7).replace(/\.?0*$/, '');
+    let roundedStr = rounded.toString();
+    return roundedStr;
+}
+
 let a = "";
 let b = "";
 let op = "";
@@ -61,13 +67,17 @@ numbers.forEach(function(num) {
             ans.textContent = "";
             b += num.textContent;
             ans.textContent = b;
+            console.log("a: " + a + " b: " + b + " ans: " + ans.textContent);
          } else {
             if (a.includes(".")) disableDecimal();
             a += num.textContent;
             ans.textContent = a;
+            console.log("a: " + a + " b: " + b + " ans: " + ans.textContent);
          }
     });
 });
+
+
 
 const btns = document.querySelectorAll(".op");
 btns.forEach(function(btn) {
@@ -76,6 +86,7 @@ btns.forEach(function(btn) {
         reset();
         a = ans.textContent;
         op = btn.textContent;
+        console.log("a: " + a + " b: " + b + " ans: " + ans.textContent);
     });
 });
 
@@ -83,6 +94,7 @@ const eq = document.querySelector("#equal");
 eq.addEventListener("click", () => {
     operate(a, b, op);
     reset();
+    console.log("a: " + a + " b: " + b + " ans: " + ans.textContent);
 });
 
 const clr = document.querySelector("#clear");
